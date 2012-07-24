@@ -10,6 +10,7 @@
 	</parent>
 	<groupId>edu.mssm.pharm.maayanlab.Convertr</groupId>
 	<artifactId>Convertr</artifactId>
+	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>Convertr</name>
 	<url>http://www.maayanlab.net</url>
