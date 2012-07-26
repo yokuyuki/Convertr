@@ -2,6 +2,7 @@ package edu.mssm.pharm.maayanlab.Convertr;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.net.URLDecoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,7 +35,7 @@ public class Convertr extends HttpServlet {
 		response.setHeader("Content-Disposition", "attachment; filename=\"" + filename  + "\"");		
 		response.setHeader("Content-Transfer-Encoding", "binary");
 		
-		byte[] decodedSVG = DatatypeConverter.parseBase64Binary(request.getParameter("data"));
+		byte[] decodedSVG = DatatypeConverter.parseBase64Binary(URLDecoder.decode(request.getParameter("data"), "UTF-8"));
 		
 		if (request.getParameter("outputType").equals("png")) {
 			PNGTranscoder transcoder = new PNGTranscoder();
