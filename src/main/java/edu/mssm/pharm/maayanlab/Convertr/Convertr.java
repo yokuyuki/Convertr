@@ -14,6 +14,7 @@ import javax.xml.bind.DatatypeConverter;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
+import org.apache.batik.transcoder.image.JPEGTranscoder;
 import org.apache.batik.transcoder.image.PNGTranscoder;
 
 @WebServlet(urlPatterns= {"/convert"})
@@ -37,8 +38,18 @@ public class Convertr extends HttpServlet {
 		
 		byte[] decodedSVG = DatatypeConverter.parseBase64Binary(URLDecoder.decode(request.getParameter("data"), "UTF-8"));
 		
-		if (request.getParameter("outputType").equals("png")) {
+		if (request.getParameter("outputType").equalsIgnoreCase("png")) {
 			PNGTranscoder transcoder = new PNGTranscoder();
+			TranscoderInput input = new TranscoderInput(new ByteArrayInputStream(decodedSVG));
+			TranscoderOutput output = new TranscoderOutput(response.getOutputStream());
+			try {
+				transcoder.transcode(input, output);
+			} catch (TranscoderException e) {
+				e.printStackTrace();
+			}
+		}
+		else if (request.getParameter("outputType").equalsIgnoreCase("jpg")) {
+			JPEGTranscoder transcoder = new JPEGTranscoder();
 			TranscoderInput input = new TranscoderInput(new ByteArrayInputStream(decodedSVG));
 			TranscoderOutput output = new TranscoderOutput(response.getOutputStream());
 			try {
